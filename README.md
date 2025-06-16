@@ -22,7 +22,6 @@ ai-platform-helm/
 └── ai-agent/ # Final LLM-based agent service   	
 
 
----
 
 ## 🚀 Installation
 
