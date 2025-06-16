@@ -11,15 +11,15 @@ This repository contains an umbrella Helm chart for deploying an AI-powered, con
 ---
 
 ## 📦 Repository Structure
-ai-platform-helm/
-├── Chart.yaml # Umbrella chart config
-├── values.yaml # Global + subchart default values
-└── charts/
-├── chromadb/ # Vector database subchart
-├── neo4j/ # Graph database subchart
-├── email-ingestor/ # Email pipeline service
-├── rag-api/ # Retrieval service
-└── ai-agent/ # Final LLM-based agent service
+ai-platform-helm/	
+├── Chart.yaml # Umbrella chart config	
+├── values.yaml # Global + subchart default values	
+└── charts/	
+├── chromadb/ # Vector database subchart	
+├── neo4j/ # Graph database subchart	
+├── email-ingestor/ # Email pipeline service	
+├── rag-api/ # Retrieval service	
+└── ai-agent/ # Final LLM-based agent service	
 
 
 ---
