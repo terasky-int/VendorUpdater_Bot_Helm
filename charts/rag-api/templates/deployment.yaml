@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rag-api.fullname" . }}
+  labels:
+    app: {{ include "rag-api.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "rag-api.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "rag-api.name" . }}
+    spec:
+      containers:
+        - name: rag-api
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CHROMA_HOST
+              value: {{ .Values.env.CHROMA_HOST | quote }}
+            - name: NEO4J_URI
+              value: {{ .Values.env.NEO4J_URI | quote }}
+            - name: NEO4J_USER
+              value: {{ .Values.env.NEO4J_USER | quote }}
+            - name: NEO4J_PASS
+              value: {{ .Values.env.NEO4J_PASS | quote }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

@@ -1,0 +1,24 @@
+image:
+  repository: neo4j
+  tag: 5.19.0-community
+  pullPolicy: IfNotPresent
+
+password: "neo4jpassword"
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: 1
+    memory: 2Gi
+
+volumes:
+  data:
+    size: 20Gi
+    storageClass: standard
+#This uses NEO4J_AUTH=neo4j/yourpassword to set the initial password.
+#Ports:
+#7474 for HTTP UI
+#7687 for Bolt protocol (used by most clients, e.g., Python driver and your RAG API)
+#If you switch to Enterprise or Cluster, you'll want to use the Neo4j Kubernetes Operator, but for a lightweight use case, this chart is perfect.

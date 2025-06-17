@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "neo4j.fullname" . }}
+  labels:
+    app: {{ include "neo4j.name" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "neo4j.name" . }}
+  serviceName: {{ include "neo4j.fullname" . }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "neo4j.name" . }}
+    spec:
+      containers:
+        - name: neo4j
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - containerPort: 7474  # HTTP
+            - containerPort: 7687  # Bolt
+          env:
+            - name: NEO4J_AUTH
+              value: "neo4j/{{ .Values.password }}"
+            - name: NEO4J_dbms_memory_heap_initial__size
+              value: "512m"
+            - name: NEO4J_dbms_memory_heap_max__size
+              value: "1G"
+            - name: NEO4J_dbms_memory_pagecache_size
+              value: "512m"
+          volumeMounts:
+            - name: neo4j-data
+              mountPath: /data
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: neo4j-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.volumes.data.size }}
+        storageClassName: {{ .Values.volumes.data.storageClass }}

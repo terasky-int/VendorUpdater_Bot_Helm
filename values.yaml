@@ -1,0 +1,75 @@
+# ai-platform-helm/values.yaml
+global:
+  namespace: ai-platform
+  imagePullPolicy: IfNotPresent
+  storageClass: standard
+
+chromadb:
+  enabled: true
+  replicaCount: 1
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: standard
+  service:
+    type: ClusterIP
+    port: 8000
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+neo4j:
+  enabled: true
+  edition: community
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  volumes:
+    data:
+      size: 20Gi
+      storageClass: standard
+  password: "neo4jpassword"
+
+email-ingestor:
+  replicaCount: 1
+  image:
+    repository: yourrepo/email-ingestor
+    tag: latest
+  env:
+    CHROMA_HOST: chromadb
+    NEO4J_URI: bolt://neo4j:7687
+    NEO4J_USER: neo4j
+    NEO4J_PASS: neo4jpassword
+
+rag-api:
+  replicaCount: 2
+  image:
+    repository: yourrepo/rag-api
+    tag: latest
+  env:
+    CHROMA_HOST: chromadb
+    NEO4J_URI: bolt://neo4j:7687
+    NEO4J_USER: neo4j
+    NEO4J_PASS: neo4jpassword
+  service:
+    type: ClusterIP
+    port: 8080
+
+ai-agent:
+  replicaCount: 1
+  image:
+    repository: yourrepo/ai-agent
+    tag: latest
+  env:
+    RAG_API_URL: http://rag-api:8080
+  service:
+    type: ClusterIP
+    port: 9000

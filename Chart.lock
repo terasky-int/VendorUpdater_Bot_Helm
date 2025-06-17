@@ -1,0 +1,18 @@
+dependencies:
+- name: chromadb
+  repository: file://charts/chromadb
+  version: 0.1.0
+- name: neo4j
+  repository: file://charts/neo4j
+  version: 0.1.0
+- name: email-ingestor
+  repository: file://charts/email-ingestor
+  version: 0.1.0
+- name: rag-api
+  repository: file://charts/rag-api
+  version: 0.1.0
+- name: ai-agent
+  repository: file://charts/ai-agent
+  version: 0.1.0
+digest: sha256:df24b5ac17e76bf6134cf86bdc4da74668d3e92d494775bc2c8d7650dfb5c56a
+generated: "2025-06-16T21:14:37.1254779+03:00"

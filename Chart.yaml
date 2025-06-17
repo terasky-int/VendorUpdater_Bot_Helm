@@ -1,0 +1,24 @@
+# ai-platform-helm/Chart.yaml
+apiVersion: v2
+name: ai-platform
+description: Umbrella Helm chart for the AI-powered email intelligence platform
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
+dependencies:
+  - name: chromadb
+    version: 0.1.0
+    repository: file://charts/chromadb
+  - name: neo4j
+    version: 0.1.0
+    repository: file://charts/neo4j
+  - name: email-ingestor
+    version: 0.1.0
+    repository: file://charts/email-ingestor
+  - name: rag-api
+    version: 0.1.0
+    repository: file://charts/rag-api
+  - name: ai-agent
+    version: 0.1.0
+    repository: file://charts/ai-agent
